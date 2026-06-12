@@ -1,1 +1,1 @@
-# AppConnect-PoT
+# AppConnect-CoE

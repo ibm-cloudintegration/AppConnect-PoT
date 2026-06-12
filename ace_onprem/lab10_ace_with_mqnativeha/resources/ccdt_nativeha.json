@@ -1,0 +1,100 @@
+{
+    "channel": [
+        {
+            "general": {
+                "description": "MQ channel details"
+            },
+            "name": "NATIVEHACHL.SVRCONN",
+            "clientConnection": {
+                "connection": [
+                    {
+                        "host": "acemq1",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "MQ01HA"
+            },
+            "type": "clientConnection"
+        },
+        {
+            "general": {
+                "description": "MQ channel details"
+            },
+            "name": "NATIVEHACHL.SVRCONN",
+            "clientConnection": {
+                "connection": [
+                    {
+                        "host": "acemq2",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "MQ01HA"
+            },
+            "type": "clientConnection"
+        },
+        {
+            "general": {
+                "description": "MQ channel details"
+            },
+            "name": "NATIVEHACHL.SVRCONN",
+            "clientConnection": {
+                "connection": [
+                    {
+                        "host": "acemq3",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "MQ01HA"
+            },
+            "type": "clientConnection"
+        },
+        {
+            "general": {
+                "description": "MQ channel details"
+            },
+            "name": "NATIVEHACHL.SVRCONN",
+            "clientConnection": {
+                "connection": [
+                    {
+                        "host": "acemq4",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "MQ01HA"
+            },
+            "type": "clientConnection"
+        },
+        {
+            "general": {
+                "description": "MQ channel details"
+            },
+            "name": "NATIVEHACHL.SVRCONN",
+            "clientConnection": {
+                "connection": [
+                    {
+                        "host": "acemq5",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "MQ01HA"
+            },
+            "type": "clientConnection"
+        },
+        {
+            "general": {
+                "description": "MQ channel details"
+            },
+            "name": "NATIVEHACHL.SVRCONN",
+            "clientConnection": {
+                "connection": [
+                    {
+                        "host": "acemq6",
+                        "port": 1414
+                    }
+                ],
+                "queueManager": "MQ01HA"
+            },
+            "type": "clientConnection"
+        }
+    ]
+}

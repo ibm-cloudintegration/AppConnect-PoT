@@ -1,0 +1,7 @@
+# Using IBM Cloud Object Storage Discovery Connector in App Connect Toolkit
+
+In this lab, you will explore IBM App Connect Enterprise (ACE) Toolkit's IBM Cloud Object Storage Discovery Connector for creating a Bucket and an Object. We have provided other Object Storage connectors such as Amazon S3 as well. Please check the list of connectors in the Toolkit pallete. 
+
+**What is a discovery connector?** 
+A discovery connector node is a connector node that contains properties whose values are set through a process of connector discovery, by using the Connector Discovery wizard that is provided with the IBM® App Connect Enterprise Toolkit. 
+Reference: https://www.ibm.com/docs/en/app-connect/13.0.x?topic=use-discovery-connector-nodes

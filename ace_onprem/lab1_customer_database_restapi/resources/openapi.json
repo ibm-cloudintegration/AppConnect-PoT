@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Customer Database",
+    "version": "1.0.0",
+    "description": "CustomerDatabaseV2"
+  },
+  "servers": [
+    {
+      "url": "/customerdb/v2"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Customer": {
+        "title": "Customer",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/customers": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "The customer was successfully added to the database"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          },
+          "required": true,
+          "description": "The customer to add to the database"
+        },
+        "parameters": [],
+        "summary": "addCustomer"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "summary": "getAllCustomers",
+        "description": "Get all customers"
+      }
+    },
+    "/customers/{customerId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "summary": "getCustomer",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the customer to get from the database"
+          }
+        ],
+        "description": "Get a Customer"
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the customer to delete from the database",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "description": "delete a customer",
+        "summary": "deleteCustomer"
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "summary": "updateCustomer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          },
+          "required": true,
+          "description": "The customer data to update in the database"
+        },        
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The customer to update in the database",
+            "required": true
+          }
+        ],
+        "description": "Update a Customer"
+      }
+    }
+  }
+}
