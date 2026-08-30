@@ -1,4 +1,4 @@
-# IBM AppConnect Labs
+
 ![](images\ACE-page.png)
 ## What is IBM App Connect?
 IBM App Connect is a solution for connecting applications, data, and APIs, whether they are in the cloud or on-premises. 
