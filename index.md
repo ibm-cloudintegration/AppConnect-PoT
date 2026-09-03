@@ -14,7 +14,7 @@ IBM App Connect is a solution for connecting applications, data, and APIs, wheth
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
 | [OnPrem](ace_onprem/index.md)       | ACE Toolkit lsbs - Standalone App Connect Enterprise.
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| [Containers](ace_containers/index.md)       | Container labs on OpenShift.
+| [Containers](ace_container/index.md)       | Container labs on OpenShift.
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
 
 
