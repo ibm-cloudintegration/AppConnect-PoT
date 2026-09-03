@@ -12,9 +12,7 @@ IBM App Connect is a solution for connecting applications, data, and APIs, wheth
 
 |  Subject                            | Description                                            |                                                               
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| [ACE MCP Server with Bob](Bob_MCP_CustomerDatabase/README.md)       | In this lab, you will deploy Customer Database REST API into IBM App Connect on Cloud Pak for Integration, then you will create an Model Context Protocol (MCP) server in App Connect which will be used in IBM Bob..
+| [ACE MCP Server with Bob](Bob_MCP_CustomerDatabase/ReadMe.md)       | In this lab, you will deploy Customer Database REST API into IBM App Connect on Cloud Pak for Integration, then you will create an Model Context Protocol (MCP) server in App Connect which will be used in IBM Bob..
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| [xxx xxx xxx](ace_onprem/xxxxx/README.md)       | tbd
+| [App Connect AI Agent](AppConnect_AI_Agent/ReadMe.md)       | tbd
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-
-
