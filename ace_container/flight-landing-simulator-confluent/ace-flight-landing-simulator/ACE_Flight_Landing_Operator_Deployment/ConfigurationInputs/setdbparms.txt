@@ -1,0 +1,2 @@
+kafka::myKafkaSecId my-scram-credentials GQ5Zi4ZyX2mW
+truststore::truststorePass dummy password

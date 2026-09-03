@@ -1,4 +1,4 @@
-
+# IBM AppConnect Labs
 ![](images\ACE-page.png)
 ## What is IBM App Connect?
 IBM App Connect is a solution for connecting applications, data, and APIs, whether they are in the cloud or on-premises. 
@@ -8,14 +8,13 @@ IBM App Connect is a solution for connecting applications, data, and APIs, wheth
 
 ## Lab Abstracts
 
-**App Connect Enterprise Labs ** <br>
+**App Connect Enterprise labs - CP4I** <br>
 
 |  Subject                            | Description                                            |                                                               
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| [OnPrem](ace_onprem/index.md)       | ACE Toolkit lsbs - Standalone App Connect Enterprise.
+| [ACE MCP Server with Bob](Bob_MCP_CustomerDatabase/README.md)       | In this lab, you will deploy Customer Database REST API into IBM App Connect on Cloud Pak for Integration, then you will create an Model Context Protocol (MCP) server in App Connect which will be used in IBM Bob..
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-| [Containers](ace_containers/index.md)       | Container labs on OpenShift.
+| [xxx xxx xxx](ace_onprem/xxxxx/README.md)       | tbd
 |-----------------------------|------------------------------------------------------------------------------------------------------------|
-
 
 

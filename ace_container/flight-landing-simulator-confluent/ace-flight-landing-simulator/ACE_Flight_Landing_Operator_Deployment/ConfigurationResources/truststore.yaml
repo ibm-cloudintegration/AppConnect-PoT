@@ -1,0 +1,8 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: ace-tk-flight-landing-truststore-es-cert
+  namespace: replace-with-namespace
+spec:
+  contents: replace-with-truststore-base64
+  type: truststore

@@ -1,0 +1,73 @@
+/*
+Author: sudhakar bodapati
+*/
+
+Create Procedure  RandomNumberBetweenMinAndMax1(IN min INTEGER, IN max INTEGER)
+	RETURNS INTEGER
+	LANGUAGE JAVA
+	EXTERNAL NAME "com.ibm.esb.common.StaticMethods.randomNumberBetweenMinAndMax1";
+
+CREATE COMPUTE MODULE Flight_Landings_Simulator_Generate_Random
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		DECLARE AIRLINES ROW;
+		SET AIRLINES.LOCATION[] = LIST{'Newark, NJ', 'New York, NY',  'Minneapolis, MN', 'Miami, FL', 'Orlando, FL', 'San Francisco, CA', 'Los Angles, CA', 'Virginia, VA ', 'Philadelphia, PA', 'Raleigh Durham, NC'};
+		SET AIRLINES.AIRPORT[] = LIST{'EWR', 'JFK',  'MSP', 'MIA', 'MCO', 'SFO', 'LAX', 'DCA', 'PHL', 'RDU'};
+		SET AIRLINES.AIRLINE[] = LIST{'Air India', 'American Airlines', 'United Airlines', 'Korean Airlines', 'Saudhi Airlines', 'British Airlines', 'Russian Airlines', 'Air China', 'Malasian Airlines', 'Canada Airlines'};
+		SET AIRLINES.FLIGHT[] = LIST{'AI', 'AA', 'UA', 'KA', 'SA', 'BA', 'RA', 'CH', 'MA', 'CA'};
+		SET AIRLINES.TERMINAL[] = LIST{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+
+		DECLARE FLIGHT CHAR;
+		DECLARE TERMINAL CHAR;
+		
+		DECLARE RANDNUMBER  int;
+		SET RANDNUMBER = RandomNumberBetweenMinAndMax1(1, 10);
+		
+		SET OutputRoot.JSON.Data.timestamp = CAST(CURRENT_GMTTIMESTAMP AS CHARACTER FORMAT 'yyyy-MM-dd''T''HH:mm:ss.SSSSSS');
+
+		-- LOCATION
+		SET OutputRoot.JSON.Data.location =  AIRLINES.LOCATION[RANDNUMBER];
+		SET OutputRoot.JSON.Data.airport = AIRLINES.AIRPORT[RANDNUMBER];
+		
+		SET RANDNUMBER = RandomNumberBetweenMinAndMax1(1, 10);
+	
+		-- AIRLINE, FLIGHT, TERMINAL
+		SET OutputRoot.JSON.Data.airline = AIRLINES.AIRLINE[RANDNUMBER];
+		SET FLIGHT = AIRLINES.FLIGHT[RANDNUMBER];
+		SET TERMINAL = AIRLINES.TERMINAL[RANDNUMBER];
+	
+		SET RANDNUMBER = RandomNumberBetweenMinAndMax1(100,999);
+		SET OutputRoot.JSON.Data.flight = FLIGHT || CAST(RANDNUMBER AS CHAR);
+		
+		SET OutputRoot.JSON.Data.terminal = TERMINAL;
+		
+		-- GATE
+		SET RANDNUMBER = RandomNumberBetweenMinAndMax1(1,99);
+		SET OutputRoot.JSON.Data.gate = RANDNUMBER;
+		
+		-- PASSENGER COUNT
+		SET RANDNUMBER = RandomNumberBetweenMinAndMax1(10,200);
+		SET OutputRoot.JSON.Data.passengers = RANDNUMBER;
+		
+		
+		-- { "timestamp" : 20230620Txxxxxx, "location": "newark", "airport": "EWR", "airline": "UNITED", "flight" : "AI100",  “terminal” : "2", "passengers": "100"}
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

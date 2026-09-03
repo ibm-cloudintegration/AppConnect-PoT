@@ -1,0 +1,86 @@
+// @Author: 
+
+timestamps {
+
+node () {
+
+wrap([$class: 'Xvfb']) {
+	stage ('Kafka_APIs_Operator_Deployment - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-token', url: 'git@github.ibm.com:Sudhakar-Bodapati/Kafka_APIs_Operator_Deployment.git']]]) 
+	}
+	stage ('Kafka_APIs_Operator_Deployment - Build') {
+		artifactResolver artifacts: [artifact(artifactId: '${ACE_APP1}', extension: 'zip', groupId: 'com.ibm.esb', version: '${ACE_APP1_VERSION}'), artifact(artifactId: '${ACE_APP2}', extension: 'zip', groupId: 'com.ibm.esb', version: '${ACE_APP2_VERSION}')], targetDirectory: '/var/icp-builds/${ACE_APP1}'
+		sh label: '', script: '''#!/bin/sh
+		cd /var/icp-builds/${ACE_APP1}
+		unzip -o ${ACE_APP1}-${ACE_APP1_VERSION}.zip
+		chmod 777 *
+		# cp DEV_${ACE_APP1_VERSION}.bar /var/lib/jenkins/jobs/${JOB_NAME}/workspace
+		cp DEV_${ACE_APP1_VERSION}.bar /var/lib/jenkins/jobs/${JOB_NAME}/workspace/DEV_${ACE_APP1}-${ACE_APP1_VERSION}.bar
+
+		unzip -o ${ACE_APP2}-${ACE_APP2_VERSION}.zip
+		chmod 777 *
+		#cp DEV_${ACE_APP2_VERSION}.bar /var/lib/jenkins/jobs/${JOB_NAME}/workspace
+		cp DEV_${ACE_APP2_VERSION}.bar /var/lib/jenkins/jobs/${JOB_NAME}/workspace/DEV_${ACE_APP2}-${ACE_APP2_VERSION}.bar
+		cd ${WORKSPACE}
+		
+		# Dockerfile
+		cp $WORKSPACE/${APP_NAME}/Dockerfile $WORKSPACE
+
+		# oc login ${OCP_API_URL} -u ${OCP_USER} -p ${OCP_PASSWORD} --insecure-skip-tls-verify
+		echo "openshift login begin-1..."
+		oc login ${OCP_API_URL} -u apikey -p ${IAM_APIKEY} --insecure-skip-tls-verify
+		echo "openshift login end-1..."
+		oc project ${Namespace}
+
+		#docker login ${OCP_Registry_External_URL} -u $(oc whoami) -p $(oc whoami -t)
+		docker login cp.icr.io -u ekey -p ${ICP4I_ENTITLEMENT_KEY_CP_ICR_IO}
+
+		docker build -t ${imagename}:${BUILD_NUMBER} .
+		docker tag ${imagename}:${BUILD_NUMBER} ${OCP_IMAGE_REGISTRY}/${Namespace}/${imagename}:latest
+
+		echo "openshift login begin-2..."
+		oc login ${OCP_API_URL} -u apikey -p ${IAM_APIKEY} --insecure-skip-tls-verify
+		echo "openshift login end-2..."
+
+		docker login https://${OCP_IMAGE_REGISTRY} -u $(oc whoami) -p $(oc whoami -t)
+		docker push ${OCP_IMAGE_REGISTRY}/${Namespace}/${imagename}:latest
+
+		#Create the IntegrationServer Configurations from CR yamls
+		chmod 777 -R ${APP_NAME}/ConfigurationInputs
+		chmod 777 -R ${APP_NAME}/ConfigurationResources
+		# Create CR for setdbparms
+		setdbparms=$(base64 -w 0 ${APP_NAME}/ConfigurationInputs/setdbparms.txt) 
+		sed -e "s/replace-with-namespace/${Namespace}/" -e "s~replace-with-setdbparms-base64~${setdbparms}~" ${APP_NAME}/ConfigurationResources/setdbparms.yaml > setdbparms-temp.yaml 
+		# Create CR for TrustStore
+		truststore=$(base64 -w 0 ${APP_NAME}/ConfigurationInputs/es-cert.p12)
+		sed -e "s/replace-with-namespace/${Namespace}/" -e "s~replace-with-truststore-base64~${truststore}~" ${APP_NAME}/ConfigurationResources/truststore.yaml > truststore-temp.yaml 
+		# Create CR for the policy project
+		policy=$(base64 -w 0 ${APP_NAME}/ConfigurationInputs/kafka_policy.zip)
+		sed -e "s/replace-with-namespace/${Namespace}/" -e "s~replace-with-policy-base64~${policy}~" ${APP_NAME}/ConfigurationResources/policyProject.yaml > policyProject-temp.yaml 
+		# Create CR for server configuration
+		serverconf=$(base64 -w 0 ${APP_NAME}/ConfigurationInputs/server.conf.yaml)
+		sed -e "s/replace-with-namespace/${Namespace}/" -e "s~replace-with-serverconf-base64~${serverconf}~" ${APP_NAME}/ConfigurationResources/server.conf.yaml > server.conf-temp.yaml 
+		# Deploy the Integration Server
+		sed -e "s/replaceIntServerName/${IntegrationServer}/" -e "s/replaceNamespace/${Namespace}/" -e "s/replaceWithBakedImage/${imagename}:latest/" ${APP_NAME}/Kafka_APIs_IS.yaml > Kafka_APIs-temp.yaml
+
+		if test ${DeploymentType} = \'install\'; then
+			oc apply -f setdbparms-temp.yaml 
+			oc apply -f truststore-temp.yaml
+			oc apply -f policyProject-temp.yaml
+			oc apply -f server.conf-temp.yaml 
+			oc apply -f Kafka_APIs-temp.yaml
+		else
+			oc replace -f setdbparms-temp.yaml 
+			oc replace -f truststore-temp.yaml
+			oc replace -f policyProject-temp.yaml
+			oc replace -f server.conf-temp.yaml 
+			oc replace -f Kafka_APIs-temp.yaml
+		fi
+		cd /var/icp-builds
+		rm -rf ${ACE_APP1}
+		rm -rf ${ACE_APP2}''' 
+	}
+}
+//cleanWs()
+}
+}

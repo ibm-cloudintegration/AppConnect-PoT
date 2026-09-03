@@ -1,0 +1,8 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: ace-tk-flight-landing-es-policy-conf
+  namespace: replace-with-namespace
+spec:
+  contents: replace-with-policy-base64
+  type: policyproject

@@ -1,0 +1,37 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationRuntime
+metadata:
+  labels:
+    appconnect.ibm.com/designerapiflow: 'false'
+    appconnect.ibm.com/designereventflow: 'false'
+    appconnect.ibm.com/toolkitflow: 'true'
+  name: ace-tk-flight-landing-simulator
+  namespace: cp4i-ace
+spec:
+  barURL:
+    - 'https://ace-dashboard-dash.cp4i-ace:3443/v1/directories/ACE_Flight_Landing_Event_Simulator_POT?2e414a1a-1a00-4e61-a34c-fb6879c00af4'
+  configurations:
+    
+    - ace-tk-flight-landing-server-conf
+    - ace-tk-flight-landing-es-policy-conf
+    - ace-tk-flight-landing-setdbparms-conf
+    - es-cert.jks
+    
+  license:
+    accept: true
+    license: L-AWVV-J3WMK6
+    use: CloudPakForIntegrationNonProductionFREE
+  logFormat: basic
+  telemetry:
+    tracing:
+      openTelemetry:
+        enabled: true
+  template:
+    spec:
+      containers:
+        - name: runtime
+          resources:
+            requests:
+              cpu: 300m
+              memory: 368Mi
+  version: '12.0'
