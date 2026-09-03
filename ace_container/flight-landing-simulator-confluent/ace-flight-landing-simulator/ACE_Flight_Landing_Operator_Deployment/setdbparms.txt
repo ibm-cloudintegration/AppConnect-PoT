@@ -1,2 +1,0 @@
-kafka::myKafkaSecId kafka-connect-credentials lcfv0eNzjM3ug90QoWrUz9hGXl4JUYQk
-truststore::truststorePass dummy passw0rd
