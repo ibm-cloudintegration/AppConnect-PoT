@@ -1,0 +1,37 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationRuntime
+metadata:
+  labels:
+    appconnect.ibm.com/designerapiflow: 'false'
+    appconnect.ibm.com/designereventflow: 'false'
+    appconnect.ibm.com/toolkitflow: 'true'
+  name: replace-with-integration-runtime
+  namespace: replace-with-namespace
+spec:
+  barURL:
+    - 'replace-with-artifactory-url/appconnect/barfiles/replace-with-appname/replace-with-barfilename'
+  configurations:
+    - artifactory-barauth-conf
+    - ace-tk-flight-landing-server-conf
+    - es-kafka-policy-conf
+    - es-kafka-setdbparms-conf
+    - es-cert.jks
+    - mq-mqdv03-policy-conf
+  license:
+    accept: true
+    license: L-SEWB-GH63KR
+    use: CloudPakForIntegrationNonProductionFREE
+  logFormat: basic
+  telemetry:
+    tracing:
+      openTelemetry:
+        enabled: true
+  template:
+    spec:
+      containers:
+        - name: runtime
+          resources:
+            requests:
+              cpu: 300m
+              memory: 368Mi
+  version: '13.0'

@@ -1,0 +1,8 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: Configuration
+metadata:
+  name: ace-tk-flight-landing-setdbparms-conf
+  namespace: cp4i-ace
+spec:
+  contents: a2Fma2E6Om15S2Fma2FTZWNJZCBrYWZrYS1jb25uZWN0LWNyZWRlbnRpYWxzIGxjZnYwZU56ak0zdWc5MFFvV3JVejloR1hsNEpVWVFrCnRydXN0c3RvcmU6OnRydXN0c3RvcmVQYXNzIGR1bW15IHBhc3N3MHJkCg==
+  type: setdbparms

@@ -1,0 +1,43 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationServer
+metadata:
+  name: replaceIntServerName
+  namespace: replaceNamespace
+spec:
+  adminServerSecure: true
+  designerFlowsOperationMode: disabled
+  license:
+    accept: true
+    license: L-APEH-CJUCNR
+    use: CloudPakForIntegrationNonProductionFREE
+  replicas: 1
+  router:
+    timeout: 120s
+  service:
+    endpointType: http
+  useCommonServices: true
+  version: 12.0.7.0-r1
+  configurations:
+    - ace-tk-flight-landing-server-conf
+    - ace-tk-flight-landing-setdbparms-conf
+    - ace-tk-flight-landing-es-policy-conf
+    - ace-tk-flight-landing-truststore-es-cert
+  pod:
+    imagePullSecrets:
+    # oc get secrets -n cp4i-ace | grep deploy (to findout the deployer-dockercfg-xxxxx) secret.
+    -  name: deployer-dockercfg-replacewithdeployerdockercfgtoken
+    -  name: ibm-entitlement-key
+    containers:
+      runtime:
+        image: image-registry.openshift-image-registry.svc:5000/cp4i-ace/replaceWithBakedImage
+        resources:
+          limits:
+            cpu: '1'
+            memory: 1Gi
+          requests:
+            cpu: 300m
+            memory: 300Mi
+        imagePullPolicy: Always
+  tracing:
+    enabled: false
+    namespace: cp4i-trace

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policies>
+  <policy policyType="Kafka" policyName="es_policy" policyTemplate="Kafka">
+    <bootstrapServers>es-dev-kafka-bootstrap-cp4i-es.ocp-dev-e8d7fad266f3d495445c089746d902f0-0000.us-east.containers.appdomain.cloud:443</bootstrapServers>
+    <securityProtocol>SASL_SSL</securityProtocol>
+    <saslMechanism>SCRAM-SHA-512</saslMechanism>
+    <sslProtocol>TLSv1.2</sslProtocol>
+    <securityIdentity>myKafkaSecId</securityIdentity>
+    <saslConfig>org.apache.kafka.common.security.scram.ScramLoginModule required;</saslConfig>
+    <sslKeystoreLocation></sslKeystoreLocation>
+    <sslKeystoreType></sslKeystoreType>
+    <sslKeystoreSecurityIdentity></sslKeystoreSecurityIdentity>
+    <sslKeySecurityIdentity></sslKeySecurityIdentity>
+    <sslTruststoreLocation>/home/aceuser/truststores/ace-tk-flight-landing-truststore-es-cert</sslTruststoreLocation>
+    <sslTruststoreType>JKS</sslTruststoreType>
+    <sslTruststoreSecurityIdentity>truststorePass</sslTruststoreSecurityIdentity>
+    <sslEnableCertificateHostnameChecking>true</sslEnableCertificateHostnameChecking>
+    <krbServiceName></krbServiceName>
+  </policy>
+</policies>
